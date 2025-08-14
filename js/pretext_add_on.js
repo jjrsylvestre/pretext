@@ -1261,3 +1261,49 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 // END Support for code-copy button functionality
+
+// valign for asides
+// TODO middle not working when prev sibling is .para.logical
+window.addEventListener("load",function(event) {
+    const asides = document.querySelectorAll("details.aside-like");
+    for (a of asides) {
+        if (a.matches(".multicolumn details.aside-like")) {
+        	continue;
+        }
+        var newTop;
+        const prevEl = a.previousElementSibling;
+        const prevHeight = prevEl.offsetHeight; // includes padding, border, and scroll bar, but not margins
+        const prevBottomMargin = parseInt(getComputedStyle(prevEl).marginBottom, 10);
+        const thisTopMargin = parseInt(getComputedStyle(a).marginTop, 10);
+        if (a.classList.contains('aside-like-top')) {
+            newTop = prevHeight - 16;
+            if (prevHeight < 48) {
+                newTop = newTop + 8;
+            }
+            if (prevHeight < 32) {
+                newTop = newTop + 8;
+            }
+        } else if (a.classList.contains('aside-like-middle')) {
+            newTop = 0.5 * prevHeight + 48;
+            if (prevHeight < 192) {
+                newTop = newTop - 16;
+            }
+            if (prevHeight < 128) {
+                newTop = newTop - 16;
+            }
+            if (prevHeight < 64) {
+                newTop = newTop - 16;
+            }
+        } else {
+            newTop = 48;
+            while (newTop > prevHeight) {
+                newTop = newTop - 8;
+            }
+            if (newTop > prevHeight) {
+                newTop = 0;
+            }
+        }
+        newTop = - newTop - prevBottomMargin - thisTopMargin;
+        a.style.top = newTop.toString() + "px";  // has no effect when screen is narrow and position is no longer relative
+    }
+});
