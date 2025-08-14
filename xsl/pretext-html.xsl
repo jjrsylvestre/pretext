@@ -3079,6 +3079,15 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 <xsl:template match="&ASIDE-LIKE;" mode="body-css-class">
     <xsl:value-of select="local-name()"/>
     <xsl:text> aside-like</xsl:text>
+    <xsl:choose>
+        <xsl:when test="@valign">
+            <xsl:text> aside-like-</xsl:text>
+            <xsl:value-of select="@valign" />
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:text> aside-like-bottom</xsl:text>
+        </xsl:otherwise>
+    </xsl:choose>
 </xsl:template>
 
 <!-- When born use this heading -->
