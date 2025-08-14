@@ -2940,7 +2940,7 @@ body.pretext > a.assistive:focus {
   background-color: var(--aside-like-body-background);
 }
 @media screen and (min-width: 1450px) {
-  details.aside-like {
+  .ptx-page:has(.ptx-sidebar:not(.hidden)) details.aside-like {
     position: relative;
     margin-left: -365px;
     width: 200px;
@@ -2948,7 +2948,23 @@ body.pretext > a.assistive:focus {
     float: right;
     clear: right;
   }
-  details.aside-like > .knowl__content {
+  .ptx-page:has(.ptx-sidebar:not(.hidden)) details.aside-like > .knowl__content {
+    margin-left: 0;
+    margin-right: 0;
+    background-color: var(--aside-like-body-background);
+    z-index: 100;
+  }
+}
+@media screen and (min-width: 1210px) {
+  .ptx-page:has(.ptx-sidebar.hidden) details.aside-like {
+    position: relative;
+    margin-left: -365px;
+    width: 200px;
+    right: -365px;
+    float: right;
+    clear: right;
+  }
+  .ptx-page:has(.ptx-sidebar.hidden) details.aside-like > .knowl__content {
     margin-left: 0;
     margin-right: 0;
     background-color: var(--aside-like-body-background);
