@@ -20,10 +20,12 @@
 $float-width: 200px !default;
 $float-offset: -248px !default;
 $min-float-width: 1280px !default;
+$sidebar-width: 240px !default;
+$min-float-hidden-sidebar-width: $min-float-width - $sidebar-width;
 
 @use 'asides-basic';
 
-@media screen and (min-width: $min-float-width) {
+@mixin float-aside() {
   details.aside-like {
     position: relative;
     margin-left: $float-offset;
@@ -48,5 +50,17 @@ $min-float-width: 1280px !default;
     margin-right:0;
     background-color: var(--aside-like-body-background);
     z-index: 100;
+  }
+}
+
+@media screen and (min-width: $min-float-width) {
+  .ptx-page:has(.ptx-sidebar:not(.hidden)) {
+    @include float-aside();
+  }
+}
+
+@media screen and (min-width: $min-float-hidden-sidebar-width) {
+  .ptx-page:has(.ptx-sidebar.hidden) {
+    @include float-aside();
   }
 }
