@@ -269,31 +269,31 @@ along with MathBook XML.  If not, see <http://www.gnu.org/licenses/>.
     </xsl:choose>
 </xsl:variable>
 
-<!-- To forward-reference solutions to exercises, we need       -->
-<!-- to know which ones atually have solutions in place later.  -->
-<!-- So we build 30 node-lists according to the direct product  -->
-<!--                                                            -->
-<!--   {inline, divisional, worksheet, reading, project}        -->
-<!--     x                                                      -->
-<!--   {hint, answer, solution}                                 -->
-<!--     x                                                      -->
-<!--   {main, back}                                             -->
-<!--                                                            -->
-<!-- iff they are elected to be displayed at some point         -->
-<!-- (intra-division or back matter) via a "solutions" element. -->
-<!--                                                            -->
-<!-- First, we provide enough of a path to clearly identify the -->
-<!-- exercise component and its location, allowing steps where  -->
-<!-- there may be intervening structure (such as an             -->
-<!-- "exercisegroup").  Careful - a component in a "worksheet"  -->
-<!-- can be part of an "exercise" (worksheet exercise) or part  -->
-<!-- of "project" inside a worksheet.                           -->
-<!--                                                            -->
-<!-- Second, we condition on whether there is a                 -->
-<!-- backmatter/solutions  that elects inclusion of the         -->
-<!-- component, or if there is a containing division which      -->
-<!-- contains a solutions (ancestor::*/child::solutions)        -->
-<!-- with the same election.                                    -->
+<!-- To forward-reference solutions to exercises, we need        -->
+<!-- to know which ones actually have solutions in place later.  -->
+<!-- So we build 30 node-lists according to the direct product   -->
+<!--                                                             -->
+<!--   {inline, divisional, worksheet, reading, project}         -->
+<!--     x                                                       -->
+<!--   {hint, answer, solution}                                  -->
+<!--     x                                                       -->
+<!--   {main, back}                                              -->
+<!--                                                             -->
+<!-- iff they are elected to be displayed at some point          -->
+<!-- (intra-division or back matter) via a "solutions" element.  -->
+<!--                                                             -->
+<!-- First, we provide enough of a path to clearly identify the  -->
+<!-- exercise component and its location, allowing steps where   -->
+<!-- there may be intervening structure (such as an              -->
+<!-- "exercisegroup").  Careful - a component in a "worksheet"   -->
+<!-- can be part of an "exercise" (worksheet exercise) or part   -->
+<!-- of "project" inside a worksheet.                            -->
+<!--                                                             -->
+<!-- Second, we condition on whether there is a                  -->
+<!-- backmatter/solutions  that elects inclusion of the          -->
+<!-- component, or if there is a containing division which       -->
+<!-- contains a solutions (ancestor::*/child::solutions)         -->
+<!-- with the same election.                                     -->
 
 <!-- Hint, Main Matter -->
 <xsl:variable name="inline-hint-main"     select="$document-root//exercise[&INLINE-EXERCISE-FILTER;]//hint[ancestor::*/solutions[contains(@inline, 'hint')]]"/>
