@@ -3592,7 +3592,9 @@ along with MathBook XML.  If not, see <http://www.gnu.org/licenses/>.
                     <xsl:text>exercisegroup-exercises</xsl:text>
                     <xsl:variable name="cols-class-name">
                         <!-- HTML-specific, but in pretext-common.xsl -->
-                        <xsl:apply-templates select="." mode="number-cols-CSS-class"/>
+                        <xsl:apply-templates select="." mode="number-cols-CSS-class">
+                            <xsl:with-param name="b-solutions" select="true()"/>
+                        </xsl:apply-templates>
                     </xsl:variable>
                     <xsl:if test="not($cols-class-name = '')">
                         <xsl:text> </xsl:text>

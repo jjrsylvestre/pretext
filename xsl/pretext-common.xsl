@@ -6215,16 +6215,24 @@ Book (with parts), "section" at level 3
 <!-- Error message if out-of-range, could be made fatal -->
 <!-- Schema should enforce this restriction also        -->
 <xsl:template match="ol|ul|exercisegroup" mode="number-cols-CSS-class">
+    <xsl:param name="b-solutions" select="false()"/>
+    <xsl:variable name="cols">
+        <xsl:choose>
+            <xsl:when test="$b-solutions and @solutions-cols"><xsl:value-of select="@solutions-cols"/></xsl:when>
+            <xsl:otherwise><xsl:value-of select="@cols"/></xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="cols-attr-name">@<xsl:if test="$b-solutions">solutions-</xsl:if>cols</xsl:variable>
     <xsl:choose>
-        <xsl:when test="not(@cols)"/>
-        <xsl:when test="@cols = 1"/>
-        <xsl:when test="(@cols = 2) or (@cols = 3) or (@cols = 4) or (@cols = 5) or (@cols = 6)">
+        <xsl:when test="$cols = ''"/>
+        <xsl:when test="$cols = 1"/>
+        <xsl:when test="($cols = 2) or ($cols = 3) or ($cols = 4) or ($cols = 5) or ($cols = 6)">
             <xsl:text>cols</xsl:text>
-            <xsl:value-of select="@cols" />
+            <xsl:value-of select="$cols" />
             <xsl:text> multicolumn</xsl:text>
         </xsl:when>
         <xsl:otherwise>
-            <xsl:message>PTX:ERROR:   @cols attribute of lists or exercise groups, must be between 1 and 6 (inclusive), not "cols=<xsl:value-of select="@cols" />"</xsl:message>
+            <xsl:message>PTX:ERROR:   <xsl:value-of select="$cols-attr-name" /> attribute of lists or exercise groups, must be between 1 and 6 (inclusive), not "<xsl:value-of select="$cols-attr-name" />=<xsl:value-of select="$cols" />"</xsl:message>
             <xsl:apply-templates select="." mode="location-report" />
         </xsl:otherwise>
     </xsl:choose>
