@@ -718,9 +718,11 @@ along with MathBook XML.  If not, see <http://www.gnu.org/licenses/>.
 <!-- at all, it gets built by mining content from other places     -->
 <xsl:template match="solutions" mode="structural-division-inner-content">
     <xsl:param name="heading-level"/>
+    <xsl:variable name="exercisegroup-cols"><xsl:value-of select="./@exercisegroup-cols"/></xsl:variable>
 
     <xsl:apply-templates select="." mode="solutions">
         <xsl:with-param name="heading-level" select="$heading-level"/>
+        <xsl:with-param name="exercisegroup-cols" select="$exercisegroup-cols"/>
     </xsl:apply-templates>
 </xsl:template>
 
@@ -3455,6 +3457,7 @@ along with MathBook XML.  If not, see <http://www.gnu.org/licenses/>.
 <xsl:template match="subexercises" mode="solutions">
     <xsl:param name="admit"/>
     <xsl:param name="heading-level"/>
+    <xsl:param name="solutions-exercisegroup-cols"/>
     <xsl:param name="b-has-statement" />
     <xsl:param name="b-has-hint" />
     <xsl:param name="b-has-answer" />
@@ -3483,12 +3486,13 @@ along with MathBook XML.  If not, see <http://www.gnu.org/licenses/>.
                 </xsl:apply-templates>
             </xsl:if>
             <xsl:apply-templates select="exercise|exercisegroup" mode="solutions">
-                <xsl:with-param name="admit"           select="$admit"/>
-                <xsl:with-param name="heading-level"   select="$heading-level + 1"/>
-                <xsl:with-param name="b-has-statement" select="$b-has-statement" />
-                <xsl:with-param name="b-has-hint"      select="$b-has-hint" />
-                <xsl:with-param name="b-has-answer"    select="$b-has-answer" />
-                <xsl:with-param name="b-has-solution"  select="$b-has-solution" />
+                <xsl:with-param name="admit"                        select="$admit"/>
+                <xsl:with-param name="heading-level"                select="$heading-level + 1"/>
+                <xsl:with-param name="solutions-exercisegroup-cols" select="$solutions-exercisegroup-cols"/>
+                <xsl:with-param name="b-has-statement"              select="$b-has-statement" />
+                <xsl:with-param name="b-has-hint"                   select="$b-has-hint" />
+                <xsl:with-param name="b-has-answer"                 select="$b-has-answer" />
+                <xsl:with-param name="b-has-solution"               select="$b-has-solution" />
             </xsl:apply-templates>
             <xsl:if test="$b-has-statement">
                 <xsl:apply-templates select="conclusion">
@@ -3563,6 +3567,7 @@ along with MathBook XML.  If not, see <http://www.gnu.org/licenses/>.
 <xsl:template match="exercisegroup" mode="solutions">
     <xsl:param name="admit"/>
     <xsl:param name="heading-level"/>
+    <xsl:param name="solutions-exercisegroup-cols"/>
     <xsl:param name="b-has-statement" />
     <xsl:param name="b-has-hint" />
     <xsl:param name="b-has-answer" />
@@ -3594,6 +3599,7 @@ along with MathBook XML.  If not, see <http://www.gnu.org/licenses/>.
                         <!-- HTML-specific, but in pretext-common.xsl -->
                         <xsl:apply-templates select="." mode="number-cols-CSS-class">
                             <xsl:with-param name="b-solutions" select="true()"/>
+                            <xsl:with-param name="solutions-exercisegroup-cols" select="$solutions-exercisegroup-cols"/>
                         </xsl:apply-templates>
                     </xsl:variable>
                     <xsl:if test="not($cols-class-name = '')">

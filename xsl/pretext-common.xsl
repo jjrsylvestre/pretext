@@ -6216,10 +6216,14 @@ Book (with parts), "section" at level 3
 <!-- Schema should enforce this restriction also        -->
 <xsl:template match="ol|ul|exercisegroup" mode="number-cols-CSS-class">
     <xsl:param name="b-solutions" select="false()"/>
+    <xsl:param name="solutions-exercisegroup-cols"/>
     <xsl:variable name="cols">
         <xsl:choose>
             <xsl:when test="$b-solutions and @solutions-cols"><xsl:value-of select="@solutions-cols"/></xsl:when>
-            <xsl:otherwise><xsl:value-of select="@cols"/></xsl:otherwise>
+            <xsl:when test="not($solutions-exercisegroup-cols = '')"><xsl:value-of select="$solutions-exercisegroup-cols"/></xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="@cols"/>
+            </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
     <xsl:variable name="cols-attr-name">@<xsl:if test="$b-solutions">solutions-</xsl:if>cols</xsl:variable>
@@ -6660,6 +6664,7 @@ Book (with parts), "section" at level 3
 <!-- introduction and conclusion as original                           -->
 <xsl:template match="solutions" mode="solutions">
     <xsl:param name="heading-level"/>
+    <xsl:param name="exercisegroup-cols"/>
 
     <!-- A "solutions" division may exist in the main matter  -->
     <!-- or the back matter.  When we generate a solution, we -->
@@ -6717,6 +6722,7 @@ Book (with parts), "section" at level 3
                 <xsl:with-param name="purpose" select="$purpose" />
                 <xsl:with-param name="admit"   select="$admit"/>
                 <xsl:with-param name="heading-level" select="$heading-level"/>
+                <xsl:with-param name="exercisegroup-cols" select="$exercisegroup-cols"/>
                 <xsl:with-param name="scope" select="$scope"/>
                 <xsl:with-param name="b-inline-statement"     select="contains(@inline,     'statement')" />
                 <xsl:with-param name="b-inline-hint"          select="contains(@inline,     'hint')"      />
@@ -6746,6 +6752,7 @@ Book (with parts), "section" at level 3
                 <xsl:with-param name="purpose" select="$purpose" />
                 <xsl:with-param name="admit"   select="$admit"/>
                 <xsl:with-param name="heading-level" select="$heading-level"/>
+                <xsl:with-param name="exercisegroup-cols" select="$exercisegroup-cols"/>
                 <xsl:with-param name="scope" select="ancestor::*[not(self::backmatter)][1]"/>
                 <xsl:with-param name="b-inline-statement"     select="contains(@inline,     'statement')" />
                 <xsl:with-param name="b-inline-hint"          select="contains(@inline,     'hint')"      />
@@ -6829,6 +6836,7 @@ Book (with parts), "section" at level 3
     <xsl:param name="admit"/>
     <xsl:param name="heading-level"/>
     <xsl:param name="heading-stack" select="."/>
+    <xsl:param name="exercisegroup-cols"/>
     <xsl:param name="scope"/>
     <xsl:param name="b-inline-statement"     />
     <xsl:param name="b-inline-hint"          />
@@ -7009,6 +7017,7 @@ Book (with parts), "section" at level 3
                                 <xsl:with-param name="admit"   select="$admit"/>
                                 <xsl:with-param name="b-component-heading" select="$b-component-heading"/>
                                 <xsl:with-param name="heading-level"       select="$next-heading-level + 1"/>
+                                <xsl:with-param name="solutions-exercisegroup-cols" select="$exercisegroup-cols"/>
                                 <xsl:with-param name="b-has-statement" select="$b-divisional-statement" />
                                 <xsl:with-param name="b-has-answer"    select="$b-divisional-answer" />
                                 <xsl:with-param name="b-has-hint"      select="$b-divisional-hint" />
@@ -7081,6 +7090,7 @@ Book (with parts), "section" at level 3
         <xsl:with-param name="admit"   select="$admit"/>
         <xsl:with-param name="heading-level" select="$heading-level"/>
         <xsl:with-param name="heading-stack" select="$next-heading-stack"/>
+        <xsl:with-param name="exercisegroup-cols" select="$exercisegroup-cols"/>
         <xsl:with-param name="scope" select="$scope" />
         <xsl:with-param name="b-inline-statement"     select="$b-inline-statement" />
         <xsl:with-param name="b-inline-answer"        select="$b-inline-answer" />
