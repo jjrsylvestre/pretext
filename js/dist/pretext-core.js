@@ -1173,10 +1173,10 @@
       ptxTocButton.focus();
     }
   }
-  function samePageLink(a) {
-    if (!(a instanceof HTMLAnchorElement)) return false;
+  function samePageLink(a2) {
+    if (!(a2 instanceof HTMLAnchorElement)) return false;
     try {
-      const linkUrl = new URL(a.href, document.baseURI);
+      const linkUrl = new URL(a2.href, document.baseURI);
       const currentUrl = new URL(window.location.href);
       const sameDocument = linkUrl.origin === currentUrl.origin && linkUrl.pathname === currentUrl.pathname && linkUrl.search === currentUrl.search;
       return sameDocument && !!linkUrl.hash;
@@ -1643,6 +1643,46 @@
     const userDropdownContent = document.getElementById("ptx-user-dropdown-content");
     if (userDropdownButton && userDropdownContent) {
       new PTXDropdown(userDropdownContent, userDropdownButton);
+    }
+  });
+  window.addEventListener("load", function(event2) {
+    const asides = document.querySelectorAll("details.aside-like");
+    for (aside of asides) {
+      var newTop;
+      const prevEl = aside.previousElementSibling;
+      const prevHeight = prevEl.getBoundingClientRect().height;
+      const prevBottomMargin = parseInt(getComputedStyle(prevEl).marginBottom, 10);
+      const thisTopMargin = parseInt(getComputedStyle(a).marginTop, 10);
+      if (aside.classList.contains("aside-like-top")) {
+        newTop = prevHeight - 16;
+        if (prevHeight > -48) {
+          newTop = newTop + 8;
+        }
+        if (prevHeight > -32) {
+          newTop = newTop + 8;
+        }
+      } else if (aside.classList.contains("aside-like-middle")) {
+        newTop = 0.5 * prevHeight + 48;
+        if (prevHeight < 192) {
+          newTop = newTop - 16;
+        }
+        if (prevHeight < 128) {
+          newTop = newTop - 16;
+        }
+        if (prevHeight < 64) {
+          newTop = newTop - 16;
+        }
+      } else {
+        newTop = 48;
+        while (newTop > prevHeight) {
+          newTop = newTop - 8;
+        }
+        if (newTop > prevHeight) {
+          newTop = 0;
+        }
+      }
+      newTop = -newTop - prevBottomMargin - thisTopMargin;
+      aside.style.top = newTop.toString() + "px";
     }
   });
 
