@@ -1546,6 +1546,46 @@
       new PTXDropdown(userDropdownContent, userDropdownButton);
     }
   });
+  window.addEventListener("load", function(event2) {
+    const asides = document.querySelectorAll("details.aside-like");
+    for (aside of asides) {
+      var newTop;
+      const prevEl = aside.previousElementSibling;
+      const prevHeight = prevEl.getBoundingClientRect().height;
+      const prevBottomMargin = parseInt(getComputedStyle(prevEl).marginBottom, 10);
+      const thisTopMargin = parseInt(getComputedStyle(aside).marginTop, 10);
+      if (aside.classList.contains("aside-like-top")) {
+        newTop = prevHeight - 16;
+        if (prevHeight > -48) {
+          newTop = newTop + 8;
+        }
+        if (prevHeight > -32) {
+          newTop = newTop + 8;
+        }
+      } else if (aside.classList.contains("aside-like-middle")) {
+        newTop = 0.5 * prevHeight + 48;
+        if (prevHeight < 192) {
+          newTop = newTop - 16;
+        }
+        if (prevHeight < 128) {
+          newTop = newTop - 16;
+        }
+        if (prevHeight < 64) {
+          newTop = newTop - 16;
+        }
+      } else {
+        newTop = 48;
+        while (newTop > prevHeight) {
+          newTop = newTop - 8;
+        }
+        if (newTop > prevHeight) {
+          newTop = 0;
+        }
+      }
+      newTop = -newTop - prevBottomMargin - thisTopMargin;
+      aside.style.top = newTop.toString() + "px";
+    }
+  });
 
   // ../../js/src/pretext-printouts.js
   function getPrintout() {
