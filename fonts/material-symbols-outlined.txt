@@ -1,4 +1,6 @@
 add
+arrow_drop_down
+arrow_drop_up
 brightness_auto
 bug_report
 calculate
