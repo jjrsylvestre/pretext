@@ -23,14 +23,14 @@
   .toc-item > .toc-title-box > .toc-expander > .icon {
     font-size: 30px;
     &:before {
-      content: "chevron_left";
+      content: "arrow_drop_down";
     }
   }
 
   .toc-item.expanded > .toc-title-box > .toc-expander > .icon {
-    transform: rotate(-90deg);
+    font-size: 30px;
     &:before {
-      content: "chevron_left";
+      content: "arrow_drop_up";
     }
   }
 }
